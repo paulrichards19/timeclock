@@ -125,6 +125,15 @@ app.get('/api/data/next', function(req, res){
 
 });
 
+app.get('/api/data/now', function(req, res){
+
+    var data = schedulerRunner.getCurrentSchedule();
+
+    res.setHeader('Content-Type', 'application/json');
+    res.send( JSON.stringify( data  ) );
+
+});
+
 app.get('/api/log/heating', function(req, res){
 
     datastore.getHeatingLog(function(data){
