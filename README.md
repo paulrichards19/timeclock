@@ -1,2 +1,2 @@
 # timeclock
-Raspberry Pii Universal remote time clock for central heating systems
+NodeJS/Raspberry Pii powered universal remote time clock for central heating systems.
