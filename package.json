@@ -1,0 +1,36 @@
+{
+  "name": "timeclock",
+  "version": "0.1.0",
+  "description": "Raspberry Pii Universal remote time clock for central heating systems",
+  "main": "heatingcontrol.js",
+  "dependencies": {
+    "async": "^0.9.0",
+    "commander": "^2.6.0",
+    "consolidate": "^0.11.0",
+    "express": "^3.19.2",
+    "lodash": "^3.1.0",
+    "moment": "^2.9.0",
+    "mongodb": "^1.4.30",
+    "mysql": "^2.5.4",
+    "node-schedule": "^0.1.16",
+    "phpjs": "^1.3.2",
+    "pi-gpio": "^0.0.6",
+    "request": "^2.53.0",
+    "socket.io": "^1.3.3",
+    "underscore": "^1.7.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/paulrichards19/timeclock"
+  },
+  "author": "paul@richards19.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/paulrichards19/timeclock/issues"
+  },
+  "homepage": "https://github.com/paulrichards19/timeclock"
+}
