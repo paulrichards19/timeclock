@@ -14,7 +14,8 @@ var Sun                 = require('./lib/sun');
 var Weatherstation      = require('./lib/weatherstation');
 var temperature         = require('./lib/temperature');
 var relay               = require('./lib/relay');
-var ledSwitch           = require('./lib/switch');
+var button              = require('./lib/button');
+var led                 = require('./lib/led');
 var Scheduler           = require('./lib/scheduler');
 
 
@@ -29,18 +30,16 @@ var temp = new temperature();
 var weatherstation = new Weatherstation();
 
 var replyRunner = new relay( eventEmitter );
-var ledSwitchRunner = new ledSwitch( eventEmitter );
+var buttonRunner = new button( eventEmitter );
+var ledRunner = new led( eventEmitter );
+
 
 var schedulerRunner;
-
 //heat control - reset to no heat on then start time clock
 setTimeout(function(){
 
-    console.log('Heat forced off to reset at startup');
-
-    setTimeout(function(){
-        schedulerRunner = new Scheduler( datastore, eventEmitter );
-    },2000)
+    console.log('Start Schedular');
+    schedulerRunner = new Scheduler( datastore, eventEmitter );
 
 },1000)
 
