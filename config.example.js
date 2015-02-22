@@ -9,5 +9,6 @@ var config = {}
 config.username = '';
 config.password = '';
 config.mongoDb  = 'mongodb://192.168.x.x:27017/name';
+config.pushkey  = 'xx-xx';
 
 module.exports = config;

@@ -17,6 +17,7 @@ var relay               = require('./lib/relay');
 var button              = require('./lib/button');
 var led                 = require('./lib/led');
 var Scheduler           = require('./lib/scheduler');
+var notify              = require('./lib/notify');
 
 
 var events = require('events');
@@ -32,6 +33,7 @@ var weatherstation = new Weatherstation();
 var replyRunner = new relay( eventEmitter );
 var buttonRunner = new button( eventEmitter );
 var ledRunner = new led( eventEmitter );
+var notifyRunner = new notify( datastore, eventEmitter );
 
 
 var schedulerRunner;
@@ -152,6 +154,15 @@ app.get('/api/log/sensors', function(req, res){
         res.send( JSON.stringify( data  ) );
 
     });
+
+});
+
+app.get('/api/mobile/register', function(req, res){
+
+    notifyRunner.registerPhone(req.query.regid);
+
+    res.setHeader('Content-Type', 'application/json');
+    res.send( JSON.stringify( { 'register': true } ) );
 
 });
 
