@@ -33,7 +33,7 @@ var weatherstation = new Weatherstation();
 var replyRunner = new relay( eventEmitter );
 var buttonRunner = new button( eventEmitter );
 var ledRunner = new led( eventEmitter );
-var notifyRunner = new notify( datastore, eventEmitter );
+var notifyRunner = new notify( datastore, eventEmitter, temp );
 
 
 var schedulerRunner;
