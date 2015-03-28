@@ -45,7 +45,14 @@ setTimeout(function(){
 
 },1000)
 
-app.use( express.basicAuth( config.username, config.password ) );
+//app.use( express.basicAuth( config.username, config.password ) );
+
+app.get('*',function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost:3001");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    next();
+});
 
 app.get('/api', function(req, res){
 

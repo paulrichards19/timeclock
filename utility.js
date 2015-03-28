@@ -11,6 +11,7 @@ program
     .option('-t, --resetschedule', 'Resets the schedule collection to defaults')
     .option('-s, --deletesensor', 'Delete the sensor collection')
     .option('-l, --deletelog', 'Delete the log collection')
+    .option('-d, --deleteall', 'Delete the log collection')
     .parse(process.argv);
 
 var DatastoreClass = require('./lib/datastore');
@@ -22,6 +23,12 @@ if( program.deletesensor ){
 
 if( program.deletelog ){
     datastore.deleteCollection('log');
+}
+
+if( program.deleteall ){
+    datastore.deleteCollection('log');
+    datastore.deleteCollection('sensors');
+    datastore.deleteCollection('mobile');
 }
 
 if( program.resetschedule ){
