@@ -178,13 +178,17 @@ app.get('/api/data', function(req, res){
 
     var sunData = new Sun().getData();
     var weatherStationData = weatherstation.getData();
-    var heatingData = schedulerRunner.getData();
+
     var tempData = temp.getData();
 
-    var data = _.merge(sunData,weatherStationData,heatingData,tempData);
+    schedulerRunner.getData(function(heatingData){
 
-    res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify(data));
+        var data = _.merge(sunData,weatherStationData,heatingData,tempData);
+
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify(data));
+
+    });
 
 });
 
