@@ -48,7 +48,7 @@ setTimeout(function(){
 //app.use( express.basicAuth( config.username, config.password ) );
 
 app.get('*',function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "http://localhost:3001");
+    res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
     next();
@@ -83,6 +83,24 @@ app.get('/api/heat/off', function(req, res){
 
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify({"done":"toggled"}));
+
+});
+
+app.get('/api/mode/off', function(req, res){
+
+    schedulerRunner.setMode('off');
+
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({"mode":"off"}));
+
+});
+
+app.get('/api/mode/auto', function(req, res){
+
+    schedulerRunner.setMode('auto');
+
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({"mode":"auto"}));
 
 });
 
