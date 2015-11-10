@@ -48,6 +48,7 @@ setTimeout(function(){
 //app.use( express.basicAuth( config.username, config.password ) );
 
 app.get('*',function(req, res, next) {
+    console.log('Web access');
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
@@ -211,5 +212,5 @@ app.get('/api/data', function(req, res){
 });
 
 var server = app.listen(3001, function(){
-    console.log('Express is listening');
+    console.log('Express is listening on 3001');
 });
