@@ -9,6 +9,7 @@ var config              = require('./config');
 
 var express             = require('express');
 var app                 = express();
+app.use(express.bodyParser());
 
 var Sun                 = require('./lib/sun');
 var Weatherstation      = require('./lib/weatherstation');
@@ -33,7 +34,7 @@ var weatherstation = new Weatherstation();
 var replyRunner = new relay( eventEmitter );
 var buttonRunner = new button( eventEmitter );
 var ledRunner = new led( eventEmitter );
-var notifyRunner = new notify( datastore, eventEmitter, temp );
+var notifyRunner = new notify( datastore, eventEmitter, temp, weatherstation );
 
 
 var schedulerRunner;
@@ -41,14 +42,13 @@ var schedulerRunner;
 setTimeout(function(){
 
     console.log('Start Schedular');
-    schedulerRunner = new Scheduler( datastore, eventEmitter );
+    schedulerRunner = new Scheduler( datastore, eventEmitter, weatherstation, temp );
 
 },1000)
 
 //app.use( express.basicAuth( config.username, config.password ) );
 
 app.get('*',function(req, res, next) {
-    console.log('Web access');
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
@@ -56,6 +56,8 @@ app.get('*',function(req, res, next) {
 });
 
 app.get('/api', function(req, res){
+
+    console.log('Web access /api');
 
     fs.exists(__dirname + '/views/api.html', function (exists) {
         if (exists) {
@@ -69,12 +71,28 @@ app.get('/api', function(req, res){
 
 });
 
+app.get('/notify', function(req, res){
+
+    console.log('Web access /notify');
+
+    fs.exists(__dirname + '/views/notify.html', function (exists) {
+        if (exists) {
+            // return the file found
+            res.sendfile(__dirname + '/views/notify.html');
+        }else{
+            // cant find the file
+            res.end("404!");
+        }
+    });
+
+});
+
 app.get('/api/heat/on', function(req, res){
 
     eventEmitter.emit('toggle:api',1);
 
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify({"done":"toggled"}));
+    res.send(JSON.stringify({"heat":"on"}));
 
 });
 
@@ -83,7 +101,7 @@ app.get('/api/heat/off', function(req, res){
     eventEmitter.emit('toggle:api',0);
 
     res.setHeader('Content-Type', 'application/json');
-    res.send(JSON.stringify({"done":"toggled"}));
+    res.send(JSON.stringify({"heat":"off"}));
 
 });
 
@@ -208,6 +226,29 @@ app.get('/api/data', function(req, res){
         res.send(JSON.stringify(data));
 
     });
+
+});
+
+app.post('/api/notify', function(req, res){
+
+
+    var message = notifyRunner.createMessage( req.body.title,
+        req.body.message,
+        req.body.icon,
+        req.body.collaspeKey,
+        false, 3600 );
+
+    notifyRunner.sendNotification( message );
+
+    var data = {
+        'title'  : req.body.title,
+        'message'  : req.body.message,
+        'collaspeKey'  : req.body.collaspeKey,
+        'icon'  : req.body.icon
+    };
+
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(data));
 
 });
 

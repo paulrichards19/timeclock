@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>Heating System</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+
+</head>
+
+
+<body>
+
+<div>
+
+    <h1>Send Notification</h1>
+
+    <form method="POST" action="/api/notify" >
+
+        <div class="form-group">
+            <label for="title" class="col-sm-2 control-label">Title</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="title" name="title" placeholder="Title" value="Heating switched on">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="message" class="col-sm-2 control-label">Message</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="message" name="message" placeholder="message" value="some message">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="icon" class="col-sm-2 control-label">Icon Path</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="icon" name="icon" placeholder="path" value="notification">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="collaspeKey" class="col-sm-2 control-label">Collaspe Key</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="collaspeKey" name="collaspeKey" placeholder="collaspeKey" value="testing">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">Notify</button>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -12,6 +12,7 @@ program
     .option('-s, --deletesensor', 'Delete the sensor collection')
     .option('-l, --deletelog', 'Delete the log collection')
     .option('-d, --deleteall', 'Delete the log collection')
+    .option('-m, --deletemobile', 'Delete the mobile collection')
     .parse(process.argv);
 
 var DatastoreClass = require('./lib/datastore');
@@ -28,6 +29,10 @@ if( program.deletelog ){
 if( program.deleteall ){
     datastore.deleteCollection('log');
     datastore.deleteCollection('sensors');
+    datastore.deleteCollection('mobile');
+}
+
+if( program.deletemobile ){
     datastore.deleteCollection('mobile');
 }
 
