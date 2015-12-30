@@ -8,8 +8,10 @@ var async               = require('async');
 var config              = require('./config');
 
 var express             = require('express');
+var bodyParser          = require("body-parser");
 var app                 = express();
-app.use(express.bodyParser());
+
+app.use(bodyParser.urlencoded({ extended: false }));
 
 var Sun                 = require('./lib/sun');
 var Weatherstation      = require('./lib/weatherstation');
@@ -51,9 +53,10 @@ setTimeout(function(){
 app.get('*',function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
     next();
 });
+
 
 app.get('/api', function(req, res){
 
@@ -251,6 +254,70 @@ app.post('/api/notify', function(req, res){
     res.send(JSON.stringify(data));
 
 });
+
+
+app.get('/api/rest/settings/:settings', function(req, res){
+
+    var result = {
+
+        heating_status  : '1',
+        mode  : 'auto',
+
+        schedule : {
+            way : 'on',
+            day : [
+                'tues',
+                'wed'
+            ]
+        }
+
+    };
+
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(result));
+
+});
+
+app.options('/api/rest/settings/:settings', function(req, res){
+
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify({}));
+
+});
+
+app.put('/api/rest/settings/:settings', function(req, res){
+
+    var result = {
+
+        heating_status  : '1',
+        mode  : 'auto',
+
+        schedule : {
+            way : 'on',
+            day : [
+                'tues',
+                'wed'
+            ]
+        }
+
+    };
+
+    console.log('Settings update');
+    console.log( req.params );
+
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(result));
+
+});
+
 
 var server = app.listen(3001, function(){
     console.log('Express is listening on 3001');
